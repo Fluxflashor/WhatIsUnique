@@ -1,0 +1,13 @@
+## Interface: 50400
+## Title: WhatIsUnique
+## Notes: Adds a line to a tooltip when an item has a unique model.
+## Author: @project-author@
+## Version: @project-version@
+## SavedVariablesPerCharacter: WhatIsUniqueDB
+## X-Website: http://fluxflashor.net/
+## X-Email: Robert@Fluxflashor.net
+## X-Category: Transmogrification
+
+lib\tekKonfigAboutPanel.lua
+
+Core.lua
