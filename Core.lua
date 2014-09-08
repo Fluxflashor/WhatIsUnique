@@ -52,7 +52,9 @@ end
 
 function WhatIsUnique:GetItemIDFromTooltip(tooltip)
     local _, link = tooltip:GetItem()
-    return split(link, ':')[2]
+    if link ~= nil then
+        return split(link, ':')[2]
+    end
 end
 
 
