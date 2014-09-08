@@ -16,7 +16,7 @@ WhatIsUnique.Author = GetAddOnMetadata(WHATISUNIQUE, "Author")
 WhatIsUnique.Version = GetAddOnMetadata(WHATISUNIQUE, "Version")
 
 WhatIsUnique.TestMode = false
-WhatIsUnique.TooltipCache = { }
+WhatIsUnique.TooltipAppended = false
 
 function split(str, pat)
     local t = {}  -- NOTE: use {n = 0} in Lua-5.0
@@ -61,17 +61,26 @@ function WhatIsUnique:RegisterEvents()
 end
 
 function WhatIsUniqueOnTooltipSetItem(tooltip, ...)
-    local item_id = WhatIsUnique:GetItemIDFromTooltip(tooltip)
-    if WhatIsUnique.UniqueModelItemIds[item_id] then
-        tooltip:AddLine("|cfffa8000Unique Model!|r")
+
+    if not WhatIsUnique.TooltipAppended then
+        local item_id = WhatIsUnique:GetItemIDFromTooltip(tooltip)
+        if WhatIsUnique.UniqueModelItemIds[item_id] then
+            tooltip:AddLine("|cfffa8000Unique Model!|r")
+        end
+        WhatIsUnique.TooltipAppended = true
     end
     --tooltip:AddLine(item_id)
+end
+
+function WhatIsUniqueOnTooltipCleared(tooltip, ...)
+    WhatIsUnique.TooltipAppended = false
 end
 
 function WhatIsUnique:Initialize()
     EventFrame:RegisterEvent("ADDON_LOADED");
     EventFrame:SetScript("OnEvent", function(self, event, ...) WhatIsUnique:EventHandler(self, event, ...) end)
     GameTooltip:SetScript("OnTooltipSetItem", WhatIsUniqueOnTooltipSetItem);
+    GameTooltip:SetScript("OnTooltipCleared", WhatIsUniqueOnTooltipCleared);
 end
 
 function WhatIsUnique:EventHandler(self, event, ...)
